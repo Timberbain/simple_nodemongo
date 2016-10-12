@@ -1,6 +1,6 @@
-# Simple Nodegres
+# Simple Node server with Mongo DB
 A docker image for starting a simple web application with
-Node and postgres with postGIS extension
+Node and mongo db
 
 # Install
 In web/server run
