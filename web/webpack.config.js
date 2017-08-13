@@ -1,35 +1,36 @@
-var webpack = require('webpack');
-var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const fs = require('fs');
 
-var BUILD_DIR = path.resolve(__dirname, 'public/javascripts/dist');
-var APP_DIR = path.resolve(__dirname, 'client/js');
+const entrypointsFolder = './assets/jsx/entrypoints';
 
-var config = {
-    entry: APP_DIR + '/index.jsx',
-    output: {
-        path: BUILD_DIR,
-        filename: 'bundle.js'
-    },
-    module: {
-        loaders: [
-            {
-                test: /\.jsx?$/,
-                include: APP_DIR,
-                loader: 'babel',
-            },
-            {
-                test: /\.css/,
-                loader: ExtractTextPlugin.extract("css")
-            }
-        ]
-    },
-    plugins: [
-        new ExtractTextPlugin("styles.css")
+const entryPoints = {};
+const files = fs.readdirSync(entrypointsFolder);
+for (let i = 0; i < files.length; i += 1) {
+  const match = files[i].match(/^.+?(?=\.jsx?)/gi);
+  if (match && match.length > 0) {
+    entryPoints[match[0]] = `${entrypointsFolder}/${files[i]}`;
+  }
+}
+
+module.exports = {
+  entry: entryPoints,
+  output: {
+    path: path.resolve(__dirname, 'public/javascripts/react'),
+    filename: '[name]-bundle.js',
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['react', 'es2015'],
+        },
+      },
     ],
-    resolve: {
-        extensions: ['', '.js', '.jsx'],
-    }
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
 };
-
-module.exports = config;

@@ -10,7 +10,8 @@ node:
 db:
     build: .
     dockerfile: db.dockerfile
-    volumes:
-        - ./db:/data/db
     ports:
         - 27017:27017
+# Using volumes on windows can be an issue
+    # volumes:
+    #     - ./db:/data/db
