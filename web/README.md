@@ -1,4 +1,4 @@
-You can read more about the advantages of choosing Firebase over AWS Cognito [here](/project_learnings/dopplergo)
+You can read more about the advantages of choosing Firebase over AWS Cognito [here](/init/web)
 
 [#firebase], [#awscognito], [#dopplergo]
 
